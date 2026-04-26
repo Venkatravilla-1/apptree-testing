@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apptree Beta Testing</title>
+<style>
+body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0D0D0D;color:#F5F0ED}
+.wrap{max-width:480px;margin:0 auto;padding:32px 20px}
+.logo{font-size:11px;font-weight:700;letter-spacing:3px;color:#B8A99E;text-transform:uppercase;margin-bottom:24px}
+h1{font-size:28px;font-weight:700;margin:0 0 8px}
+.sub{font-size:15px;color:#B8A99E;line-height:1.6;margin-bottom:32px}
+.info{background:#1F1C1A;border:1px solid #3A3330;border-radius:16px;padding:16px;margin-bottom:32px}
+.info p{font-size:13px;color:#B8A99E;line-height:1.7;margin:0}
+.info strong{color:#F5F0ED}
+.label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#B8A99E;margin-bottom:12px}
+.card{display:block;background:#1F1C1A;border:1px solid #3A3330;border-radius:20px;padding:20px;margin-bottom:12px;text-decoration:none;color:inherit}
+.card:hover{border-color:#E8846A}
+.card-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.name{font-size:18px;font-weight:700;margin:0 0 2px}
+.tagline{font-size:13px;color:#B8A99E;margin:0}
+.arrow{margin-left:auto;font-size:22px;color:#E8846A}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.c-active{background:#2A1E18;color:#E8846A;border:1px solid #E8846A}
+.c-soon{background:#1F2B22;color:#8AAF8A;border:1px solid #8AAF8A}
+.c-gray{background:#2A2522;color:#B8A99E;border:1px solid #3A3330}
+.dim{opacity:0.4;pointer-events:none}
+.footer{margin-top:40px;padding-top:24px;border-top:1px solid #2A2522;text-align:center;font-size:13px;color:#B8A99E}
+.footer a{color:#E8846A;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">Apptree · Beta Testing</div>
+  <h1>Welcome, Tester 👋</h1>
+  <p class="sub">Thank you for helping us build better apps. Select an app below to begin testing.</p>
+  <div class="info">
+    <p><strong>Before you start:</strong> You are testing early builds of apps by Apptree, a Stormforge Pty Ltd product. These are not finished products. Expect rough edges. Your honest feedback helps us fix real problems before launch. Nothing you say will hurt our feelings.</p>
+  </div>
+  <div class="label">Active testing</div>
+  <a href="forgefit/index.html" class="card">
+    <div class="card-top">
+      <div class="icon" style="background:#2A1E18">💪</div>
+      <div>
+        <p class="name">ForgeFit</p>
+        <p class="tagline">Forged for you — AI fitness coaching</p>
+      </div>
+      <span class="arrow">→</span>
+    </div>
+    <div class="chips">
+      <span class="chip c-active">Testing now</span>
+      <span class="chip c-gray">Android</span>
+      <span class="chip c-gray">Beta v1.0</span>
+    </div>
+  </a>
+  <div class="label" style="margin-top:24px">Coming soon</div>
+  <div class="card dim">
+    <div class="card-top">
+      <div class="icon" style="background:#1A2E1F">🏠</div>
+      <div>
+        <p class="name">Angan</p>
+        <p class="tagline">आँगन — Family household intelligence</p>
+      </div>
+    </div>
+    <div class="chips">
+      <span class="chip c-soon">Coming soon</span>
+      <span class="chip c-gray">Android · iOS</span>
+    </div>
+  </div>
+  <div class="footer">
+    <p>Built by <strong>Apptree</strong> · A Stormforge Pty Ltd product</p>
+    <p style="margin-top:6px">Questions? <a href="mailto:support@forgefit.app">support@forgefit.app</a></p>
+  </div>
+</div>
+</body>
+</html>
