@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ForgeFit Beta Tester Guide</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#141210;color:#F5F0ED;padding-bottom:40px}
+a{color:#E8846A;text-decoration:none}
+
+.topbar{background:#1F1C1A;border-bottom:1px solid #3A3330;padding:14px 20px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:50}
+.back{font-size:14px;color:#B8A99E}
+.topbar-title{font-size:16px;font-weight:700;flex:1;text-align:center}
+.topbar-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:#2A1E18;color:#E8846A;border:1px solid #E8846A}
+
+.hero{padding:28px 20px;text-align:center;border-bottom:1px solid #2A2522}
+.app-icon{width:72px;height:72px;background:#2A1E18;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 14px}
+.hero h1{font-size:24px;font-weight:700;margin-bottom:6px}
+.hero p{font-size:14px;color:#B8A99E;line-height:1.6;margin-bottom:20px}
+.btn{display:block;padding:14px;border-radius:14px;font-size:15px;font-weight:700;text-align:center;cursor:pointer;border:none;width:100%;margin-bottom:10px}
+.btn-primary{background:#E8846A;color:#fff}
+.btn-outline{background:transparent;color:#E8846A;border:2px solid #E8846A}
+
+.tabs{display:flex;background:#1F1C1A;border-bottom:1px solid #2A2522;position:sticky;top:53px;z-index:49}
+.tab{flex:1;padding:13px 4px;text-align:center;font-size:13px;font-weight:500;color:#B8A99E;cursor:pointer;border-bottom:2px solid transparent}
+.tab.on{color:#E8846A;border-bottom-color:#E8846A}
+
+.panel{display:none;padding:16px 16px}
+.panel.on{display:block}
+
+.prog-box{background:#1F1C1A;border-radius:16px;padding:16px;margin-bottom:16px}
+.prog-top{display:flex;justify-content:space-between;margin-bottom:8px}
+.prog-label{font-size:14px;font-weight:600}
+.prog-pct{font-size:14px;font-weight:700;color:#E8846A}
+.prog-bar{height:6px;background:#2A2522;border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:#E8846A;border-radius:3px;width:0%;transition:width .4s}
+.stats{display:flex;gap:8px;margin-top:12px}
+.stat{flex:1;background:#2A2522;border-radius:10px;padding:10px;text-align:center}
+.stat-n{font-size:20px;font-weight:700}
+.stat-l{font-size:11px;color:#B8A99E;margin-top:2px}
+
+.info-box{background:#1A1F26;border:1px solid #2E3540;border-radius:12px;padding:14px;margin-bottom:16px}
+.info-box p{font-size:13px;color:#7BA7BC;line-height:1.6}
+
+.fcard{background:#1F1C1A;border:1px solid #3A3330;border-radius:16px;margin-bottom:14px;overflow:hidden}
+.fhead{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer}
+.ficon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.fname{font-size:15px;font-weight:600;margin-bottom:2px}
+.fcount{font-size:12px;color:#B8A99E}
+.fchev{color:#B8A99E;font-size:18px;margin-left:auto;transition:transform .2s}
+.fchev.open{transform:rotate(90deg)}
+.fitems{border-top:1px solid #2A2522;display:none}
+.fitems.open{display:block}
+
+.ci{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid #1A1816}
+.ci:last-child{border-bottom:none}
+.cb{width:22px;height:22px;border-radius:6px;border:1.5px solid #3A3330;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;margin-top:1px;background:transparent}
+.cb.on{background:#E8846A;border-color:#E8846A}
+.ct{font-size:14px;color:#F5F0ED;line-height:1.5;flex:1}
+.ct.done{color:#5A5450;text-decoration:line-through}
+
+.chip{font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px}
+.ch1{background:#2A1E18;color:#E8846A}
+.ch2{background:#1F2B22;color:#8AAF8A}
+.ch3{background:#1A1F26;color:#7BA7BC}
+.ch4{background:#221E2E;color:#9E8FBC}
+
+.fsec{background:#1F1C1A;border-radius:16px;padding:16px;margin-bottom:14px}
+.fsec h3{font-size:16px;font-weight:600;margin-bottom:14px}
+.flabel{font-size:12px;font-weight:600;color:#B8A99E;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block}
+select,textarea,input[type=text]{width:100%;background:#2A2522;border:1px solid #3A3330;border-radius:10px;color:#F5F0ED;font-size:14px;padding:11px;font-family:inherit;margin-bottom:14px;-webkit-appearance:none;appearance:none}
+select:focus,textarea:focus,input:focus{outline:none;border-color:#E8846A}
+textarea{resize:vertical;min-height:76px;line-height:1.5}
+.sevgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:14px}
+.sevbtn{padding:10px 4px;border-radius:10px;border:1.5px solid #3A3330;background:#2A2522;color:#B8A99E;font-size:12px;font-weight:600;cursor:pointer;text-align:center;line-height:1.4}
+.sevbtn.sl{border-color:#8AAF8A;background:#1F2B22;color:#8AAF8A}
+.sevbtn.sm{border-color:#D4A853;background:#201A08;color:#D4A853}
+.sevbtn.sh{border-color:#BC6B5E;background:#201010;color:#BC6B5E}
+.subbtn{width:100%;padding:14px;background:#E8846A;color:#fff;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer}
+.ok-msg{background:#1F2B22;border:1px solid #8AAF8A;border-radius:12px;padding:12px;text-align:center;color:#8AAF8A;font-size:14px;font-weight:600;display:none;margin-bottom:14px}
+
+.bug-item{background:#2A2522;border-radius:12px;padding:14px;margin-bottom:10px}
+.bug-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.bdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.bid{font-size:13px;font-weight:700}
+.bscr{font-size:13px;color:#B8A99E}
+.bact{font-size:13px;line-height:1.5;margin-bottom:4px}
+.bmeta{font-size:11px;color:#5A5450}
+.nobugs{text-align:center;padding:28px;color:#B8A99E;font-size:14px}
+
+.expbox{background:#2A2522;border-radius:12px;padding:14px;margin-bottom:12px;font-family:monospace;font-size:12px;color:#B8A99E;white-space:pre-wrap;word-break:break-all;max-height:280px;overflow-y:auto}
+.copybtn{width:100%;padding:12px;background:#2A2522;color:#E8846A;border:1.5px solid #E8846A;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px}
+
+.steplist{list-style:none}
+.steprow{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #2A2522}
+.steprow:last-child{border-bottom:none}
+.stepn{width:30px;height:30px;border-radius:50%;background:#2A1E18;color:#E8846A;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;margin-top:2px}
+.stept{font-size:14px;font-weight:600;margin-bottom:3px}
+.stepd{font-size:13px;color:#B8A99E;line-height:1.5}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="../index.html" class="back">← Hub</a>
+  <div class="topbar-title">ForgeFit Testing</div>
+  <span class="topbar-badge">Beta v1.0</span>
+</div>
+
+<div class="hero">
+  <div class="app-icon">💪</div>
+  <h1>ForgeFit Tester Guide</h1>
+  <p>Work through each flow. Tick off what works.<br>Report everything that does not.</p>
+  <button class="btn btn-primary" onclick="switchTab('bugs')">Report a Bug</button>
+  <button class="btn btn-outline" onclick="switchTab('share')">Share My Results</button>
+</div>
+
+<div class="tabs">
+  <div class="tab on" onclick="switchTab('guide')">Guide</div>
+  <div class="tab" onclick="switchTab('bugs')">Bug Report</div>
+  <div class="tab" onclick="switchTab('share')">My Results</div>
+</div>
+
+<!-- GUIDE -->
+<div id="guide" class="panel on">
+
+  <div class="prog-box">
+    <div class="prog-top">
+      <span class="prog-label">Your progress</span>
+      <span class="prog-pct" id="pct">0%</span>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="pfill"></div></div>
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="sdone">0</div><div class="stat-l">checked</div></div>
+      <div class="stat"><div class="stat-n" id="stotal">0</div><div class="stat-l">total items</div></div>
+      <div class="stat"><div class="stat-n" id="sbugs">0</div><div class="stat-l">bugs reported</div></div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <p><strong style="color:#7BA7BC">How to install:</strong> Download the APK file, go to Settings → Security → Install unknown apps on your Android phone, allow your browser, then open the downloaded file and tap Install.</p>
+  </div>
+
+  <!-- F1 -->
+  <div class="fcard">
+    <div class="fhead" onclick="tog('f1')">
+      <div class="ficon" style="background:#2A1E18">🚀</div>
+      <div><div class="fname">Flow 1 — First launch</div><div class="fcount" id="f1c">0 of 6 checked</div></div>
+      <span class="chip ch1">Start here</span>
+      <span class="fchev" id="f1v">›</span>
+    </div>
+    <div class="fitems" id="f1">
+      <div class="ci"><div class="cb" onclick="tick(this,'f1')"></div><span class="ct">App opens without crashing</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f1')"></div><span class="ct">Splash screen and logo show correctly</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f1')"></div><span class="ct">4 onboarding slides appear and swipe correctly</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f1')"></div><span class="ct">Legal agreement screen appears</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f1')"></div><span class="ct">Can register with email and password</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f1')"></div><span class="ct">Guest mode works without an account</span></div>
+    </div>
+  </div>
+
+  <!-- F2 -->
+  <div class="fcard">
+    <div class="fhead" onclick="tog('f2')">
+      <div class="ficon" style="background:#1F2B22">🧠</div>
+      <div><div class="fname">Flow 2 — Profile wizard</div><div class="fcount" id="f2c">0 of 15 checked</div></div>
+      <span class="chip ch2">Important</span>
+      <span class="fchev" id="f2v">›</span>
+    </div>
+    <div class="fitems" id="f2">
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Name field — keyboard appears and accepts input</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Keyboard dismisses cleanly when tapping Next</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Age wheel — selected number is visible and centred in highlight box</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Age wheel scrolls smoothly with haptic feedback on each step</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Biological sex — all 4 options visible and selectable</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Height wheel — cm and ft/in toggle works correctly</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Weight wheel — kg and lbs toggle works correctly</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Primary goal — all options visible, one selectable at a time</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Experience level — 3 options visible and selectable</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Training location — 4 options visible and selectable</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Equipment question appears when home or mix is selected</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Injuries — can skip with No injuries button</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Motivation style — 3 options visible and selectable</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Back button always goes to previous question correctly</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f2')"></div><span class="ct">Progress dots at top update as you move through questions</span></div>
+    </div>
+  </div>
+
+  <!-- F3 -->
+  <div class="fcard">
+    <div class="fhead" onclick="tog('f3')">
+      <div class="ficon" style="background:#1A1F26">✨</div>
+      <div><div class="fname">Flow 3 — Persona recommendation</div><div class="fcount" id="f3c">0 of 11 checked</div></div>
+      <span class="chip ch3">Key feature</span>
+      <span class="fchev" id="f3v">›</span>
+    </div>
+    <div class="fitems" id="f3">
+      <div class="ci"><div class="cb" onclick="tick(this,'f3')"></div><span class="ct">Loading animation shows after completing last question</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f3')"></div><span class="ct">Recommended persona card appears with your name on it</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f3')"></div><span class="ct">3 reasons shown explaining why this persona suits you</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f3')"></div><span class="ct">Can swipe left and right to see all 7 personas</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f3')"></div><span class="ct">Recommended badge clearly visible on correct persona card</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f3')"></div><span class="ct">Background colour transitions smoothly when swiping personas</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f3')"></div><span class="ct">Swipe hint arrows visible and fade after first swipe</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f3')"></div><span class="ct">Confirm button works and shows a celebration screen</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f3')"></div><span class="ct">Celebration screen shows your name and selected persona</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f3')"></div><span class="ct">Lets Go button takes you to the Today screen</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f3')"></div><span class="ct">Android back on Today screen asks to exit — does NOT go back to wizard</span></div>
+    </div>
+  </div>
+
+  <!-- F4 -->
+  <div class="fcard">
+    <div class="fhead" onclick="tog('f4')">
+      <div class="ficon" style="background:#221E2E">🏠</div>
+      <div><div class="fname">Flow 4 — Today screen</div><div class="fcount" id="f4c">0 of 7 checked</div></div>
+      <span class="chip ch4">Dashboard</span>
+      <span class="fchev" id="f4v">›</span>
+    </div>
+    <div class="fitems" id="f4">
+      <div class="ci"><div class="cb" onclick="tick(this,'f4')"></div><span class="ct">Today screen loads with correct time of day greeting</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f4')"></div><span class="ct">Persona colours and theme applied throughout the app</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f4')"></div><span class="ct">Body stats card shows your weight, BMI and height</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f4')"></div><span class="ct">BMI category colour correct — green healthy, amber overweight</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f4')"></div><span class="ct">Tapping body stats card opens body composition screen</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f4')"></div><span class="ct">All bottom navigation tabs visible and tappable</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f4')"></div><span class="ct">No content hidden behind the navigation bar</span></div>
+    </div>
+  </div>
+
+  <!-- F5 -->
+  <div class="fcard">
+    <div class="fhead" onclick="tog('f5')">
+      <div class="ficon" style="background:#2A1E18">🏋️</div>
+      <div><div class="fname">Flow 5 — Log a workout</div><div class="fcount" id="f5c">0 of 17 checked</div></div>
+      <span class="chip ch1">Core feature</span>
+      <span class="fchev" id="f5v">›</span>
+    </div>
+    <div class="fitems" id="f5">
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Start workout button works and opens muscle group selection</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Ticking a muscle group does NOT cause the screen to jump or bounce</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Multiple muscle groups can be selected</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">AI generates a workout after muscle group selection</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Exercise list shows correct exercises for selected muscles</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Workout screen does NOT bounce when scrolling to the bottom</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Tapping weight field opens scroll wheel picker</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Weight wheel and rep wheel are visually aligned at same height</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Selected numbers in both wheels are clearly visible</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Wheels scroll smoothly with haptic feedback each step</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Completing a set automatically starts the rest timer</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Rest timer counts down correctly</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Skip rest timer button works</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Previous performance shows below each exercise in muted text</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Finish workout button visible and works</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Workout summary screen appears after finishing</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f5')"></div><span class="ct">Completed workout saves and appears in history</span></div>
+    </div>
+  </div>
+
+  <!-- F6 -->
+  <div class="fcard">
+    <div class="fhead" onclick="tog('f6')">
+      <div class="ficon" style="background:#1F2B22">📊</div>
+      <div><div class="fname">Flow 6 — Progress and body stats</div><div class="fcount" id="f6c">0 of 8 checked</div></div>
+      <span class="chip ch2">Progress</span>
+      <span class="fchev" id="f6v">›</span>
+    </div>
+    <div class="fitems" id="f6">
+      <div class="ci"><div class="cb" onclick="tick(this,'f6')"></div><span class="ct">Completed workout appears in history</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f6')"></div><span class="ct">Progress graphs show data after completing a workout</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f6')"></div><span class="ct">PR badge shows when beating a previous personal record</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f6')"></div><span class="ct">Body composition screen shows weight from initial setup</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f6')"></div><span class="ct">BMI gauge displays on body composition screen</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f6')"></div><span class="ct">Can manually add a new weight entry</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f6')"></div><span class="ct">Can add a progress photo from camera or gallery</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f6')"></div><span class="ct">Privacy notice appears before first progress photo</span></div>
+    </div>
+  </div>
+
+  <!-- F7 -->
+  <div class="fcard">
+    <div class="fhead" onclick="tog('f7')">
+      <div class="ficon" style="background:#1A1F26">📖</div>
+      <div><div class="fname">Flow 7 — Exercise how-to</div><div class="fcount" id="f7c">0 of 6 checked</div></div>
+      <span class="chip ch3">Content</span>
+      <span class="fchev" id="f7v">›</span>
+    </div>
+    <div class="fitems" id="f7">
+      <div class="ci"><div class="cb" onclick="tick(this,'f7')"></div><span class="ct">Tapping an exercise opens the how-to screen</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f7')"></div><span class="ct">Animation or silhouette shows demonstrating the exercise</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f7')"></div><span class="ct">How To tab shows clear numbered steps</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f7')"></div><span class="ct">Tips tab shows common mistakes and pro tips</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f7')"></div><span class="ct">Muscles tab shows primary and secondary muscles worked</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f7')"></div><span class="ct">Variations tab shows easier and harder alternatives</span></div>
+    </div>
+  </div>
+
+  <!-- F8 -->
+  <div class="fcard">
+    <div class="fhead" onclick="tog('f8')">
+      <div class="ficon" style="background:#221E2E">⚙️</div>
+      <div><div class="fname">Flow 8 — Settings and themes</div><div class="fcount" id="f8c">0 of 6 checked</div></div>
+      <span class="chip ch4">Settings</span>
+      <span class="fchev" id="f8v">›</span>
+    </div>
+    <div class="fitems" id="f8">
+      <div class="ci"><div class="cb" onclick="tick(this,'f8')"></div><span class="ct">Can change app theme from settings</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f8')"></div><span class="ct">New theme applies immediately across all screens</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f8')"></div><span class="ct">Can change persona from settings</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f8')"></div><span class="ct">Can retake the persona quiz from settings</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f8')"></div><span class="ct">Dark and light mode toggle works correctly</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f8')"></div><span class="ct">Settings remembered after closing and reopening app</span></div>
+    </div>
+  </div>
+
+  <!-- F9 -->
+  <div class="fcard">
+    <div class="fhead" onclick="tog('f9')">
+      <div class="ficon" style="background:#2A1E18">⭐</div>
+      <div><div class="fname">Flow 9 — Overall impressions</div><div class="fcount" id="f9c">0 of 7 checked</div></div>
+      <span class="chip ch1">Final step</span>
+      <span class="fchev" id="f9v">›</span>
+    </div>
+    <div class="fitems" id="f9">
+      <div class="ci"><div class="cb" onclick="tick(this,'f9')"></div><span class="ct">App feels smooth and responsive overall</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f9')"></div><span class="ct">No screens feel confusing or unclear</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f9')"></div><span class="ct">Text is readable on all screens</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f9')"></div><span class="ct">Buttons are large enough and easy to tap</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f9')"></div><span class="ct">Nothing feels broken or unfinished</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f9')"></div><span class="ct">Would use this app regularly for my fitness</span></div>
+      <div class="ci"><div class="cb" onclick="tick(this,'f9')"></div><span class="ct">Would recommend ForgeFit to a friend</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BUG REPORT -->
+<div id="bugs" class="panel">
+  <div class="info-box"><p>Report every issue you find — big or small. The more detail the faster we can fix it. Be completely honest.</p></div>
+  <div class="ok-msg" id="okmsg">Bug reported. Keep testing!</div>
+  <div class="fsec">
+    <h3>Report a bug</h3>
+    <label class="flabel">Your first name</label>
+    <input type="text" id="fn" placeholder="e.g. Sarah">
+    <label class="flabel">Which screen?</label>
+    <select id="fscr">
+      <option value="">Select a screen...</option>
+      <option>App launch / splash</option>
+      <option>Onboarding slides</option>
+      <option>Legal agreement</option>
+      <option>Sign in or register</option>
+      <option>Profile wizard — name</option>
+      <option>Profile wizard — age wheel</option>
+      <option>Profile wizard — height wheel</option>
+      <option>Profile wizard — weight wheel</option>
+      <option>Profile wizard — goal selection</option>
+      <option>Profile wizard — other question</option>
+      <option>Persona recommendation</option>
+      <option>Persona swipe cards</option>
+      <option>Celebration screen</option>
+      <option>Today / home screen</option>
+      <option>Body stats / BMI card</option>
+      <option>Body composition screen</option>
+      <option>Progress photos</option>
+      <option>Start workout</option>
+      <option>Muscle group selection</option>
+      <option>Active workout screen</option>
+      <option>Weight and rep picker</option>
+      <option>Rest timer</option>
+      <option>Workout summary</option>
+      <option>Workout history</option>
+      <option>Exercise how-to</option>
+      <option>Templates</option>
+      <option>Settings screen</option>
+      <option>Theme or persona change</option>
+      <option>Other</option>
+    </select>
+    <label class="flabel">What were you doing?</label>
+    <textarea id="fact" placeholder="e.g. I tapped the weight field on bench press and tried to scroll the wheel..."></textarea>
+    <label class="flabel">What actually happened?</label>
+    <textarea id="fact2" placeholder="e.g. The screen jumped up and I lost my place. The numbers were invisible..."></textarea>
+    <label class="flabel">What did you expect?</label>
+    <textarea id="fexp" placeholder="e.g. I expected the picker to open smoothly with clear visible numbers..."></textarea>
+    <label class="flabel">How severe?</label>
+    <div class="sevgrid">
+      <button class="sevbtn" onclick="setSev('low',this)">Minor<br><small style="font-weight:400">Cosmetic only</small></button>
+      <button class="sevbtn" onclick="setSev('med',this)">Moderate<br><small style="font-weight:400">Annoying but ok</small></button>
+      <button class="sevbtn" onclick="setSev('high',this)">Severe<br><small style="font-weight:400">Cannot continue</small></button>
+    </div>
+    <label class="flabel">Does it happen every time?</label>
+    <select id="ffreq">
+      <option value="">Select...</option>
+      <option>Yes every time</option>
+      <option>Most of the time</option>
+      <option>Sometimes randomly</option>
+      <option>Only happened once</option>
+    </select>
+    <label class="flabel">Your phone model (optional)</label>
+    <input type="text" id="fphone" placeholder="e.g. Samsung Galaxy A17, Pixel 6...">
+    <label class="flabel">Anything else?</label>
+    <textarea id="fnotes" placeholder="Any other details or suggestions..."></textarea>
+    <button class="subbtn" onclick="submitBug()">Submit Bug Report</button>
+  </div>
+  <div id="buglistwrap" style="display:none">
+    <div class="fsec"><h3>Your submitted reports</h3><div id="buglist"></div></div>
+  </div>
+</div>
+
+<!-- SHARE -->
+<div id="share" class="panel">
+  <div class="prog-box">
+    <div class="prog-top"><span class="prog-label">Testing summary</span><span class="prog-pct" id="sh-pct">0%</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="sh-fill"></div></div>
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="sh-done">0</div><div class="stat-l">checked</div></div>
+      <div class="stat"><div class="stat-n" id="sh-total">0</div><div class="stat-l">total</div></div>
+      <div class="stat"><div class="stat-n" id="sh-bugs">0</div><div class="stat-l">bugs found</div></div>
+    </div>
+  </div>
+  <div class="fsec">
+    <h3>How to send your results</h3>
+    <ul class="steplist">
+      <li class="steprow"><div class="stepn">1</div><div><div class="stept">Tap Copy Report below</div><div class="stepd">Copies all your bug reports as formatted text</div></div></li>
+      <li class="steprow"><div class="stepn">2</div><div><div class="stept">Open WhatsApp</div><div class="stepd">Message Venkat or post in the tester group</div></div></li>
+      <li class="steprow"><div class="stepn">3</div><div><div class="stept">Paste and send</div><div class="stepd">Long press in the message box and paste</div></div></li>
+      <li class="steprow"><div class="stepn">4</div><div><div class="stept">Screenshot this page</div><div class="stepd">Send a screenshot showing your checked items too</div></div></li>
+    </ul>
+  </div>
+  <div class="fsec">
+    <h3 style="margin-bottom:12px">Your bug reports</h3>
+    <div class="expbox" id="expbox">No bugs reported yet. Go to the Bug Report tab to add issues.</div>
+    <button class="copybtn" onclick="copyRep()">Copy report to clipboard</button>
+    <p id="copymsg" style="text-align:center;font-size:13px;color:#8AAF8A;display:none">Copied! Paste into WhatsApp.</p>
+  </div>
+  <div class="fsec">
+    <h3 style="margin-bottom:8px">Contact</h3>
+    <p style="font-size:14px;color:#B8A99E;margin-top:8px">Email: <a href="mailto:support@forgefit.app">support@forgefit.app</a></p>
+  </div>
+</div>
+
+<script>
+var bugs=[];
+var sev='';
+var flows=['f1','f2','f3','f4','f5','f6','f7','f8','f9'];
+
+function switchTab(id){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});
+  var tabs=document.querySelectorAll('.tab');
+  var ids=['guide','bugs','share'];
+  var i=ids.indexOf(id);
+  if(i>=0)tabs[i].classList.add('on');
+  document.getElementById(id).classList.add('on');
+  upd();
+}
+
+function tog(id){
+  var el=document.getElementById(id);
+  var ch=document.getElementById(id+'v');
+  el.classList.toggle('open');
+  ch.classList.toggle('open');
+}
+
+function tick(el,fid){
+  el.classList.toggle('on');
+  var label=el.nextElementSibling;
+  label.classList.toggle('done');
+  el.innerHTML=el.classList.contains('on')?'<svg width="13" height="13" viewBox="0 0 13 13"><polyline points="2,7 5.5,10.5 11,3" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':'';
+  upd();
+}
+
+function upd(){
+  var done=0,total=0;
+  flows.forEach(function(fid){
+    var el=document.getElementById(fid);
+    if(!el)return;
+    var all=el.querySelectorAll('.cb');
+    var chk=el.querySelectorAll('.cb.on');
+    done+=chk.length;
+    total+=all.length;
+    var c=document.getElementById(fid+'c');
+    if(c)c.textContent=chk.length+' of '+all.length+' checked';
+  });
+  var p=total>0?Math.round((done/total)*100):0;
+  ['pct','sh-pct'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=p+'%'});
+  ['pfill','sh-fill'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.width=p+'%'});
+  ['sdone','sh-done'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=done});
+  ['stotal','sh-total'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=total});
+  ['sbugs','sh-bugs'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=bugs.length});
+  updExp();
+}
+
+function setSev(level,btn){
+  document.querySelectorAll('.sevbtn').forEach(function(b){b.classList.remove('sl','sm','sh')});
+  sev=level;
+  if(level==='low')btn.classList.add('sl');
+  if(level==='med')btn.classList.add('sm');
+  if(level==='high')btn.classList.add('sh');
+}
+
+function submitBug(){
+  var scr=document.getElementById('fscr').value;
+  var act=document.getElementById('fact').value.trim();
+  var act2=document.getElementById('fact2').value.trim();
+  if(!scr||!act||!act2){alert('Please fill in: screen, what you were doing, and what happened.');return;}
+  bugs.push({
+    id:bugs.length+1,
+    name:document.getElementById('fn').value.trim()||'Tester',
+    screen:scr,
+    action:act,
+    actual:act2,
+    expected:document.getElementById('fexp').value.trim(),
+    severity:sev||'med',
+    frequency:document.getElementById('ffreq').value,
+    phone:document.getElementById('fphone').value.trim(),
+    notes:document.getElementById('fnotes').value.trim(),
+    time:new Date().toLocaleString()
+  });
+  document.getElementById('fscr').value='';
+  document.getElementById('fact').value='';
+  document.getElementById('fact2').value='';
+  document.getElementById('fexp').value='';
+  document.getElementById('ffreq').value='';
+  document.getElementById('fphone').value='';
+  document.getElementById('fnotes').value='';
+  sev='';
+  document.querySelectorAll('.sevbtn').forEach(function(b){b.classList.remove('sl','sm','sh')});
+  var m=document.getElementById('okmsg');
+  m.style.display='block';
+  setTimeout(function(){m.style.display='none'},3000);
+  renderBugs();
+  upd();
+}
+
+function renderBugs(){
+  var dc={low:'#8AAF8A',med:'#D4A853',high:'#BC6B5E'};
+  var dl={low:'Minor',med:'Moderate',high:'Severe'};
+  var html=bugs.length===0?'<div class="nobugs">No bugs yet.</div>':bugs.map(function(b){
+    return '<div class="bug-item"><div class="bug-top"><div class="bdot" style="background:'+dc[b.severity]+'"></div><span class="bid">#'+b.id+'</span><span class="bscr">'+b.screen+'</span><span style="margin-left:auto;font-size:11px;color:#5A5450">'+dl[b.severity]+'</span></div><div class="bact">'+b.action+'</div><div class="bmeta">'+(b.frequency||'')+(b.phone?' · '+b.phone:'')+' · '+b.time+'</div></div>';
+  }).join('');
+  var el=document.getElementById('buglist');
+  if(el){el.innerHTML=html;document.getElementById('buglistwrap').style.display='block';}
+}
+
+function updExp(){
+  var box=document.getElementById('expbox');
+  if(!box)return;
+  if(bugs.length===0){box.textContent='No bugs reported yet.';return;}
+  var dl={low:'MINOR',med:'MODERATE',high:'SEVERE'};
+  var txt='=== FORGEFIT BETA BUG REPORT ===\nDate: '+new Date().toLocaleDateString()+'\nBugs: '+bugs.length+'\n\n'+bugs.map(function(b){
+    return '--- BUG #'+b.id+' ['+dl[b.severity||'med']+'] ---\nTester: '+b.name+'\nScreen: '+b.screen+'\nPhone: '+(b.phone||'Not specified')+'\nDoing: '+b.action+'\nHappened: '+b.actual+'\nExpected: '+(b.expected||'Not specified')+'\nFrequency: '+(b.frequency||'Not specified')+'\nNotes: '+(b.notes||'None')+'\nTime: '+b.time;
+  }).join('\n\n');
+  box.textContent=txt;
+}
+
+function copyRep(){
+  var box=document.getElementById('expbox');
+  if(!box||bugs.length===0)return;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(box.textContent).then(function(){showCopy()});
+  } else {
+    var r=document.createRange();
+    r.selectNode(box);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(r);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+    showCopy();
+  }
+}
+
+function showCopy(){
+  var m=document.getElementById('copymsg');
+  m.style.display='block';
+  setTimeout(function(){m.style.display='none'},3000);
+}
+
+upd();
+</script>
+</body>
+</html>
